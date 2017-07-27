@@ -29,15 +29,23 @@ var gameOfLife = {
   },
 
   forEachCell: function (iteratorFunc) {
-    /* 
-      Write forEachCell here. You will have to visit
-      each cell on the board, call the "iteratorFunc" function,
-      and pass into func, the cell and the cell's x & y
-      coordinates. For example: iteratorFunc(cell, x, y)
-    */
+
+    for (var i=0;i<this.height;i++) {
+      for (var j=0;j<this.width;j++) {
+        var cell=document.getElementById(i + "-" + j)
+          iteratorFunc(cell,i,j);
+
+      }
+    }
   },
   
   setupBoardEvents: function() {
+    // this.forEachCell(function (cell,i,j) {
+    //   console.log(cell,i,j);
+    // })
+
+
+    
     // each board cell has an CSS id in the format of: "x-y" 
     // where x is the x-coordinate and y the y-coordinate
     // use this fact to loop through all the ids and assign
@@ -57,6 +65,8 @@ var gameOfLife = {
       // QUESTION TO ASK YOURSELF: What is "this" equal to here?
       
       // how to set the style of the cell when it's clicked
+
+
       if (this.dataset.status == 'dead') {
         this.className = 'alive';
         this.dataset.status = 'alive';
@@ -66,9 +76,40 @@ var gameOfLife = {
       }
       
     };
+    this.forEachCell(function (cell,i,j) {
+      cell.addEventListener("click",onCellClick.bind(cell))
+    });
+
+    // reset randomize
+    var resetButton = document.getElementById('reset_btn');
+    var resetClick = function (e) {
+      this.forEachCell(function (cell,i,j) {
+        if (Math.random() < .5) {
+        cell.className = 'alive';
+        cell.dataset.status = 'alive';
+        } else {
+        cell.className = 'dead';
+        cell.dataset.status = 'dead';
+        } 
+      });
+    }
+
+    resetButton.addEventListener('click',resetClick.bind());
+
+    // clear board
+  var clearButton = document.getElementById('clear_btn');
+  var clearBoard = function (e) {
+      this.forEachCell(function (cell,i,j) {
     
-    var cell00 = document.getElementById('0-0');
-    cell00.addEventListener('click', onCellClick);
+        cell.className = 'dead';
+        cell.dataset.status = 'dead';
+        
+      });
+    }
+clearButton.addEventListener('click',clearBoard.bind());
+
+    // var cell00 = document.getElementById('0-0');
+    // cell00.addEventListener('click', onCellClick);
   },
 
   step: function () {
