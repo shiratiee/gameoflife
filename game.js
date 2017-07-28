@@ -70,7 +70,7 @@ var gameOfLife = {
 
     var stepButton = document.getElementById('step_btn');
     stepButton.addEventListener('click',this.step.bind(this));
-  
+
 
 
 
@@ -127,8 +127,12 @@ var gameOfLife = {
     var countAliveNeighbors = function (cell) {
       var id = cell.id;
       var coordinates = id.split("-");
-      var x = coordinates[0];
-      var y = coordinates[1];
+      var x = parseInt(coordinates[0]);
+      var y = parseInt(coordinates[1]);
+
+      if (x === 1 && y === 1) {
+        if (x) "hi";
+      }
 
       var numAlive = 0;
       for (var i = x-1; i <= x+1; i++) {
@@ -146,10 +150,11 @@ var gameOfLife = {
     var aliveNeighbors = {};
 
     this.forEachCell(function(cell,i,j) {
-      console.log(cell);
+      //console.log(cell);
       aliveNeighbors[i+"-"+j] = countAliveNeighbors(cell);
-      console.log(aliveNeighbors[i+"-"+j]);
+      //console.log(aliveNeighbors[i+"-"+j]);
     });
+
     this.forEachCell(function(cell,i,j) {
       if (cell.dataset.status =="alive" && (aliveNeighbors[i+"-"+j] === 2 || aliveNeighbors[i+"-"+j] === 3)) {
         cell.dataset.status = "alive";
