@@ -68,6 +68,11 @@ var gameOfLife = {
     // reset randomize
     var resetButton = document.getElementById('reset_btn');
 
+    var stepButton = document.getElementById('step_btn');
+    stepButton.addEventListener('click',this.step.bind(this));
+  
+
+
 
     var resetClick = function (e) {
 
@@ -98,15 +103,19 @@ var gameOfLife = {
 
     clearButton.addEventListener('click',clearBoard.bind(this));
 
-    document.getElementById("1-0").dataset.status="alive";
-    document.getElementById("1-0").className="alive";
-    document.getElementById("1-1").dataset.status="alive";
-    document.getElementById("1-1").className="alive";
+    document.getElementById("5-4").dataset.status="alive";
+    document.getElementById("5-4").className="alive";
+
+    document.getElementById("6-4").dataset.status="alive";
+    document.getElementById("6-4").className="alive";
+    document.getElementById("7-4").dataset.status="alive";
+    document.getElementById("7-4").className="alive";
     this.step();
 
   },
 
   step: function () {
+
     // Here is where you want to loop through all the cells
     // on the board and determine, based on it's neighbors,
     // whether the cell should be dead or alive in the next
@@ -141,7 +150,21 @@ var gameOfLife = {
       aliveNeighbors[i+"-"+j] = countAliveNeighbors(cell);
       console.log(aliveNeighbors[i+"-"+j]);
     });
-
+    this.forEachCell(function(cell,i,j) {
+      if (cell.dataset.status =="alive" && (aliveNeighbors[i+"-"+j] === 2 || aliveNeighbors[i+"-"+j] === 3)) {
+        cell.dataset.status = "alive";
+        cell.className = 'alive'
+      } else if (cell.dataset.status =="alive"  && aliveNeighbors[i+"-"+j] <2) {
+        cell.dataset.status = "dead"
+        cell.className = 'dead';
+      } else if (cell.dataset.status =="alive" && aliveNeighbors[i+"-"+j] >3) {
+        cell.dataset.status ="dead"
+        cell.className = 'dead';
+      } else if (cell.dataset.status =="dead" && aliveNeighbors[i+"-"+j] === 3) {
+        cell.dataset.status="alive"
+        cell.className = 'alive';
+      }
+    })
   },
 
   enableAutoPlay: function () {
