@@ -175,6 +175,14 @@ var gameOfLife = {
   enableAutoPlay: function () {
     // Start Auto-Play by running the 'step' function
     // automatically repeatedly every fixed time interval
+    if(this.stepInterval){
+      return this.stopAutoPlay();
+    }
+    this.stepInterval = setInterval(this.step.bind(this), 500);
+  },
+  stopAutoPlay: function(){
+    clearInterval(this.stepInterval);
+    this.stepInterval = null;
   }
 
 };
