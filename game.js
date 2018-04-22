@@ -71,8 +71,10 @@ var gameOfLife = {
     var stepButton = document.getElementById('step_btn');
     stepButton.addEventListener('click',this.step.bind(this));
 
+    var playButton = document.getElementById('play_btn');
+    playButton.addEventListener('click',this.enableAutoPlay.bind(this));
 
-
+    
 
     var resetClick = function (e) {
 
@@ -113,6 +115,7 @@ var gameOfLife = {
     this.step();
 
   },
+  
 
   step: function () {
 
@@ -169,22 +172,36 @@ var gameOfLife = {
         cell.dataset.status="alive"
         cell.className = 'alive';
       }
-    })
+    });
+    
+  },
+
+  stopAutoPlay: function() {
+    if (this.stepInterval) {
+      clearInterval(this.stepInterval);
+      this.stepInterval = null;
+      document
+        .getElementById('play_btn')
+        .innerText = 'Play';
+    }
   },
 
   enableAutoPlay: function () {
     // Start Auto-Play by running the 'step' function
     // automatically repeatedly every fixed time interval
-    if(this.stepInterval){
-      return this.stopAutoPlay();
+    if (!this.stepInterval) {
+      this.stepInterval = setInterval(this.step.bind(this), 200);
+      document
+        .getElementById('play_btn')
+        .innerText = 'Stop';
+    } else {
+      this.stopAutoPlay();
     }
-    this.stepInterval = setInterval(this.step.bind(this), 500);
-  },
-  stopAutoPlay: function(){
-    clearInterval(this.stepInterval);
-    this.stepInterval = null;
   }
-
+  
+     
 };
+
+
 
 gameOfLife.createAndShowBoard();
