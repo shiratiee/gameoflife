@@ -1,12 +1,31 @@
 body {
   padding: 10px;
+  text-align: center;
+  font-family: 'Muli', sans-serif;
+  background-color: rgb(94, 12, 80);
 }
 
 h1, h2 {
+  font-family: 'Prata', serif;
   text-align: center;
 }
 #board{
   margin: 0 auto;
+}
+
+#container {
+  display: inline-block;
+  background-color: #fff;
+  text-align: center;
+  width: 800px;
+  height: 700px;
+}
+
+#container p {
+  margin: 0 auto;
+  width: 50%;
+  text-align: center;
+  padding: 15px;
 }
 
 #board td{
@@ -16,7 +35,7 @@ h1, h2 {
 }
 
 td.alive {
-  background-color: #8CC8DD;
+  background-color: rgb(221, 74, 162);
 }
 
 td.dead {

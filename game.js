@@ -1,7 +1,7 @@
 var gameOfLife = {
 
-  width: 12,
-  height: 12, // width and height dimensions of the board
+  width: 24,
+  height: 24, // width and height dimensions of the board
   stepInterval: null, // should be used to hold reference to an interval that is "playing" the game
 
   createAndShowBoard: function () {
@@ -180,9 +180,7 @@ var gameOfLife = {
     if (this.stepInterval) {
       clearInterval(this.stepInterval);
       this.stepInterval = null;
-      document
-        .getElementById('play_btn')
-        .innerText = 'Play';
+      document.getElementById('play_btn').innerText = 'Play';
     }
   },
 
@@ -190,10 +188,8 @@ var gameOfLife = {
     // Start Auto-Play by running the 'step' function
     // automatically repeatedly every fixed time interval
     if (!this.stepInterval) {
-      this.stepInterval = setInterval(this.step.bind(this), 200);
-      document
-        .getElementById('play_btn')
-        .innerText = 'Stop';
+      this.stepInterval = setInterval(this.step.bind(this), 400);
+      document.getElementById('play_btn').innerText = 'Stop';
     } else {
       this.stopAutoPlay();
     }
